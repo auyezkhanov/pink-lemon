@@ -136,6 +136,20 @@ const server = http.createServer(async (req, res) => {
   const url = new URL(req.url, `http://${req.headers.host}`);
   const pathname = url.pathname;
 
+  // CORS — allows a split deploy (static frontend on one host, e.g. Vercel,
+  // this backend on another, e.g. Render). The API has no cookie-based auth
+  // to protect, so reflecting the request origin is safe here.
+  if (pathname.startsWith("/api/")) {
+    res.setHeader("Access-Control-Allow-Origin", req.headers.origin || "*");
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+    res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-Admin-Key");
+    if (req.method === "OPTIONS") {
+      res.writeHead(204);
+      return res.end();
+    }
+  }
+
   try {
     // POST /api/leads — store a new submission (заявка)
     if (req.method === "POST" && pathname === "/api/leads") {

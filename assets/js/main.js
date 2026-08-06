@@ -263,7 +263,7 @@
       var payload = Object.fromEntries(new FormData(form).entries());
       payload.page = document.title;
 
-      fetch("/api/leads", {
+      fetch((window.PL_API_BASE || "") + "/api/leads", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)

@@ -1,0 +1,6 @@
+# This deploy is the static frontend only — the Node/SQLite backend runs
+# separately (e.g. on Render). Keep it out of the Vercel build entirely.
+backend/
+Dockerfile
+render.yaml
+README.md
