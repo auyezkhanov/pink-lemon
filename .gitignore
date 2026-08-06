@@ -1,0 +1,13 @@
+# Runtime data — the leads database is generated at first run, not source.
+backend/data/
+backend/server.log
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.log
+
+# Original mockup file already copied into assets/img/hero-portrait.jpeg
+WhatsApp Image*.jpeg
+
+node_modules/

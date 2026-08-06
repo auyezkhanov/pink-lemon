@@ -1,0 +1,11 @@
+# Render Blueprint — lets Render auto-configure this service from the Dockerfile.
+# On render.com: New + → Blueprint → point at this repo → Apply.
+services:
+  - type: web
+    name: pink-lemon
+    runtime: docker
+    plan: free
+    healthCheckPath: /
+    envVars:
+      - key: ADMIN_KEY
+        sync: false

@@ -1,0 +1,13 @@
+{
+  "name": "pink-lemon",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Pink Lemon — creative direction studio site with a Node.js backend (SQLite) for storing form submissions.",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}

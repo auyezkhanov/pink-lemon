@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Pink Lemon Leads</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20viewBox%3D%270%200%2032%2032%27%3E%3Ccircle%20cx%3D%2716%27%20cy%3D%2716%27%20r%3D%2716%27%20fill%3D%27%230e0e0e%27%2F%3E%3Cpath%20d%3D%27M16%206c5%202.6%209%206.4%209%2010s-4%207.4-9%2010c-5-2.6-9-6.4-9-10s4-7.4%209-10Z%27%20fill%3D%27%23fff%27%2F%3E%3Cpath%20d%3D%27M12%2013.2c1.2-1.4%202.8-2.1%204.4-2%27%20stroke%3D%27%230e0e0e%27%20stroke-width%3D%271.3%27%20stroke-linecap%3D%27round%27%20fill%3D%27none%27%2F%3E%3C%2Fsvg%3E">
+<link rel="stylesheet" href="/assets/css/style.css">
+<style>
+  body{ background:var(--surface); }
+  .admin-wrap{ max-width:1180px; margin:0 auto; padding:40px 24px 100px; }
+  .admin-top{ display:flex; align-items:center; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:28px; }
+  .admin-top h1{ font-size:24px; font-weight:800; letter-spacing:-.02em; }
+  .admin-top p{ color:var(--muted); font-size:13.5px; margin-top:4px; }
+  .gate{ max-width:420px; margin:80px auto; background:#fff; border-radius:var(--radius-lg); padding:40px; border:1px solid var(--border); }
+  .gate h2{ font-size:20px; font-weight:800; margin-bottom:10px; }
+  .gate p{ color:var(--muted); font-size:13.5px; margin-bottom:22px; line-height:1.6; }
+  .toolbar{ display:flex; gap:10px; margin-bottom:22px; flex-wrap:wrap; align-items:center; }
+  .toolbar input[type="search"]{ flex:1; min-width:220px; padding:12px 16px; border-radius:999px; border:1px solid var(--border); font-size:14px; }
+  .stat-pill{ background:#fff; border:1px solid var(--border); border-radius:999px; padding:9px 16px; font-size:13px; font-weight:600; color:var(--muted); }
+  .table-card{ background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); overflow:hidden; }
+  table{ width:100%; border-collapse:collapse; font-size:13.5px; }
+  .table-scroll{ overflow-x:auto; }
+  th, td{ text-align:left; padding:14px 16px; border-bottom:1px solid var(--border); white-space:nowrap; }
+  th{ background:var(--surface); font-size:11.5px; text-transform:uppercase; letter-spacing:.04em; color:var(--muted-2); font-weight:700; }
+  td.msg-cell{ white-space:normal; max-width:280px; color:var(--muted); }
+  td.name-cell{ font-weight:700; }
+  tr:last-child td{ border-bottom:none; }
+  .badge{ display:inline-block; padding:4px 10px; border-radius:999px; background:var(--surface); font-size:11.5px; font-weight:700; }
+  .badge.yes{ background:#e8f7ee; color:#178a4c; }
+  .badge.no{ background:#fdeef1; color:#a3123a; }
+  .row-del{ background:none; border:1px solid var(--border); border-radius:8px; padding:6px 10px; font-size:12px; color:var(--muted); }
+  .row-del:hover{ background:#fdeef1; border-color:#f4c2cf; color:#a3123a; }
+  .empty-state{ text-align:center; padding:60px 20px; color:var(--muted); }
+</style>
+</head>
+<body>
+
+<div id="gate" class="gate">
+  <h2>Admin access</h2>
+  <p>Enter the admin key to view submitted leads (заявки). Default local key: <strong>pinklemon-admin</strong> unless you set <code>ADMIN_KEY</code> when starting the server.</p>
+  <div class="field">
+    <input id="key-input" type="password" placeholder="Admin key" autocomplete="off">
+  </div>
+  <button class="btn btn-primary btn-block" id="unlock-btn">Unlock</button>
+  <p id="gate-error" style="color:#a3123a; display:none; margin-top:14px;">Invalid admin key.</p>
+</div>
+
+<div class="admin-wrap hide" id="dashboard">
+  <div class="admin-top">
+    <div>
+      <h1>Leads dashboard</h1>
+      <p>All submissions from the proposal popup and the contact form, stored locally in SQLite.</p>
+    </div>
+    <div style="display:flex; gap:10px;">
+      <button class="btn btn-outline btn-sm" id="refresh-btn">Refresh</button>
+      <button class="btn btn-outline btn-sm" id="logout-btn">Lock</button>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input type="search" id="search-input" placeholder="Search by name, email, company or message…">
+    <span class="stat-pill" id="count-pill">0 leads</span>
+  </div>
+
+  <div class="table-card">
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr>
+            <th>Date</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Company</th>
+            <th>Phone</th>
+            <th>Type</th>
+            <th>Budget</th>
+            <th>Message</th>
+            <th>Source</th>
+            <th>Consent</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="leads-body"></tbody>
+      </table>
+    </div>
+    <div class="empty-state hide" id="empty-state">No leads yet — submit the proposal form or contact form on the site to see it appear here.</div>
+  </div>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var gate = document.getElementById("gate");
+  var dashboard = document.getElementById("dashboard");
+  var keyInput = document.getElementById("key-input");
+  var unlockBtn = document.getElementById("unlock-btn");
+  var gateError = document.getElementById("gate-error");
+  var leadsBody = document.getElementById("leads-body");
+  var emptyState = document.getElementById("empty-state");
+  var countPill = document.getElementById("count-pill");
+  var searchInput = document.getElementById("search-input");
+  var STORAGE_KEY = "pl_admin_key";
+  var allLeads = [];
+
+  function getKey() { return sessionStorage.getItem(STORAGE_KEY) || ""; }
+
+  function fmtDate(iso) {
+    try {
+      var d = new Date(iso);
+      return d.toLocaleString(undefined, { year: "numeric", month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+    } catch (e) { return iso; }
+  }
+
+  function cell(text) {
+    var td = document.createElement("td");
+    td.textContent = text || "—";
+    return td;
+  }
+
+  function render(leads) {
+    leadsBody.innerHTML = "";
+    countPill.textContent = leads.length + (leads.length === 1 ? " lead" : " leads");
+    emptyState.classList.toggle("hide", leads.length > 0);
+
+    leads.forEach(function (lead) {
+      var tr = document.createElement("tr");
+
+      tr.appendChild(cell(fmtDate(lead.created_at)));
+
+      var nameTd = cell(lead.name);
+      nameTd.className = "name-cell";
+      tr.appendChild(nameTd);
+
+      var emailTd = document.createElement("td");
+      var emailLink = document.createElement("a");
+      emailLink.href = "mailto:" + lead.email;
+      emailLink.textContent = lead.email;
+      emailTd.appendChild(emailLink);
+      tr.appendChild(emailTd);
+
+      tr.appendChild(cell(lead.company));
+      tr.appendChild(cell(lead.phone));
+      tr.appendChild(cell(lead.project_type));
+      tr.appendChild(cell(lead.budget));
+
+      var msgTd = document.createElement("td");
+      msgTd.className = "msg-cell";
+      msgTd.textContent = lead.message;
+      tr.appendChild(msgTd);
+
+      tr.appendChild(cell(lead.form_source));
+
+      var consentTd = document.createElement("td");
+      var badge = document.createElement("span");
+      badge.className = "badge " + (lead.consent ? "yes" : "no");
+      badge.textContent = lead.consent ? "Yes" : "No";
+      consentTd.appendChild(badge);
+      tr.appendChild(consentTd);
+
+      var delTd = document.createElement("td");
+      var delBtn = document.createElement("button");
+      delBtn.className = "row-del";
+      delBtn.textContent = "Delete";
+      delBtn.addEventListener("click", function () { removeLead(lead.id); });
+      delTd.appendChild(delBtn);
+      tr.appendChild(delTd);
+
+      leadsBody.appendChild(tr);
+    });
+  }
+
+  function applySearch() {
+    var q = searchInput.value.trim().toLowerCase();
+    if (!q) { render(allLeads); return; }
+    render(allLeads.filter(function (l) {
+      return [l.name, l.email, l.company, l.message, l.form_source].join(" ").toLowerCase().indexOf(q) !== -1;
+    }));
+  }
+
+  function loadLeads() {
+    fetch("/api/leads", { headers: { "X-Admin-Key": getKey() } })
+      .then(function (res) {
+        if (res.status === 401) throw new Error("unauthorized");
+        return res.json();
+      })
+      .then(function (data) {
+        allLeads = data.leads || [];
+        applySearch();
+      })
+      .catch(function () {
+        sessionStorage.removeItem(STORAGE_KEY);
+        showGate(true);
+      });
+  }
+
+  function removeLead(id) {
+    if (!confirm("Delete this lead?")) return;
+    fetch("/api/leads/" + id, { method: "DELETE", headers: { "X-Admin-Key": getKey() } })
+      .then(function () { loadLeads(); });
+  }
+
+  function showGate(withError) {
+    gate.classList.remove("hide");
+    dashboard.classList.add("hide");
+    gateError.style.display = withError ? "block" : "none";
+  }
+
+  function showDashboard() {
+    gate.classList.add("hide");
+    dashboard.classList.remove("hide");
+    loadLeads();
+  }
+
+  unlockBtn.addEventListener("click", function () {
+    var key = keyInput.value.trim();
+    if (!key) return;
+    sessionStorage.setItem(STORAGE_KEY, key);
+    showDashboard();
+  });
+  keyInput.addEventListener("keydown", function (e) { if (e.key === "Enter") unlockBtn.click(); });
+
+  document.getElementById("refresh-btn").addEventListener("click", loadLeads);
+  document.getElementById("logout-btn").addEventListener("click", function () {
+    sessionStorage.removeItem(STORAGE_KEY);
+    showGate(false);
+  });
+  searchInput.addEventListener("input", applySearch);
+
+  if (getKey()) showDashboard();
+})();
+</script>
+</body>
+</html>

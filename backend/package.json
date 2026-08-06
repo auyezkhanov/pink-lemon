@@ -1,0 +1,13 @@
+{
+  "name": "pink-lemon-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local backend for Pink Lemon — stores form submissions (leads) in SQLite via node:sqlite. No external dependencies.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=22.5.0"
+  }
+}
