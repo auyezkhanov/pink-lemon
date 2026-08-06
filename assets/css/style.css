@@ -160,10 +160,13 @@ h1,h2,h3,h4,p{ margin:0; }
 
 .nav-toggle{
   display:none; width:42px; height:42px; align-items:center; justify-content:center;
-  border-radius:50%; border:1px solid var(--border); background:var(--card); color:var(--fg);
+  border-radius:50%; border:1px solid var(--border); background:var(--card); color:var(--fg); flex:none;
 }
 .nav-toggle span, .nav-toggle::before, .nav-toggle::after{ display:none; }
 .nav-toggle svg{ width:18px; height:18px; }
+.nav-toggle .icon-close{ display:none; }
+.nav-toggle.open .icon-menu{ display:none; }
+.nav-toggle.open .icon-close{ display:block; }
 
 .theme-toggle{
   width:42px; height:42px; flex:none; display:flex; align-items:center; justify-content:center;
@@ -174,14 +177,21 @@ h1,h2,h3,h4,p{ margin:0; }
 :root[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
 :root[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
 
+/* Full-screen overlay, independent of the header's real height — no more
+   guessing a fixed top offset that breaks when the header wraps to 2 lines. */
 .mobile-drawer{
   display:none;
-  position:fixed; inset:84px 0 0 0; z-index:55;
+  position:fixed; inset:0; z-index:300;
   background:var(--bg);
-  padding:28px 24px;
   overflow-y:auto;
+  flex-direction:column;
 }
-.mobile-drawer.open{ display:block; }
+.mobile-drawer.open{ display:flex; }
+.mobile-drawer-top{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 20px; border-bottom:1px solid var(--border); flex:none;
+}
+.mobile-drawer-links{ padding:12px 24px 28px; flex:1; }
 .mobile-drawer a{
   display:block; padding:16px 4px; font-size:20px; font-weight:600;
   border-bottom:1px solid var(--border);
@@ -194,6 +204,10 @@ h1,h2,h3,h4,p{ margin:0; }
   .nav-right .btn-primary span.label{ display:none; }
 }
 @media (min-width:901px){ .mobile-drawer{ display:none !important; } }
+@media (max-width:420px){
+  .nav-right{ gap:10px; }
+  .nav-right .btn-primary{ padding:14px 16px; }
+}
 
 /* ---------- Hero ---------- */
 .hero{

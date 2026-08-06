@@ -71,16 +71,29 @@
   /* ---------------- Mobile nav ---------------- */
   var navToggle = document.querySelector("[data-nav-toggle]");
   var mobileDrawer = document.querySelector("[data-mobile-drawer]");
+  var mobileDrawerClose = document.querySelector("[data-mobile-drawer-close]");
+
+  function openMobileDrawer() {
+    mobileDrawer.classList.add("open");
+    if (navToggle) navToggle.classList.add("open");
+    document.body.style.overflow = "hidden";
+  }
+  function closeMobileDrawer() {
+    mobileDrawer.classList.remove("open");
+    if (navToggle) navToggle.classList.remove("open");
+    document.body.style.overflow = "";
+  }
+  window.PinkLemon = window.PinkLemon || {};
+  window.PinkLemon.closeMobileDrawer = closeMobileDrawer;
+
   if (navToggle && mobileDrawer) {
     navToggle.addEventListener("click", function () {
-      mobileDrawer.classList.toggle("open");
-      document.body.style.overflow = mobileDrawer.classList.contains("open") ? "hidden" : "";
+      if (mobileDrawer.classList.contains("open")) closeMobileDrawer();
+      else openMobileDrawer();
     });
+    if (mobileDrawerClose) mobileDrawerClose.addEventListener("click", closeMobileDrawer);
     mobileDrawer.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () {
-        mobileDrawer.classList.remove("open");
-        document.body.style.overflow = "";
-      });
+      a.addEventListener("click", closeMobileDrawer);
     });
   }
 
@@ -134,6 +147,7 @@
     if (e.key === "Escape") {
       var openOverlay = document.querySelector(".modal-overlay.open");
       if (openOverlay) closeModal(openOverlay);
+      else if (mobileDrawer && mobileDrawer.classList.contains("open")) closeMobileDrawer();
     }
   });
 

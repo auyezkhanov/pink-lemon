@@ -39,16 +39,25 @@
       </button>
       <button class="btn btn-primary" data-open-modal="modal-proposal"><span class="icon-plus">+</span><span class="label">Get a Proposal</span></button>
       <button class="nav-toggle" data-nav-toggle aria-label="Open menu">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="icon-menu" viewBox="0 0 24 24" fill="none"><path d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+        <svg class="icon-close" viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
       </button>
     </div>
   </div>
   <div class="mobile-drawer" data-mobile-drawer>
-    <a href="index.html">Home</a>
-    <a href="work.html">Work</a>
-    <a href="contact.html">Contact</a>
-    <a href="about.html">About</a>
-    <button class="btn btn-primary btn-block" data-open-modal="modal-proposal">+ Get a Proposal</button>
+    <div class="mobile-drawer-top">
+      <span class="brand"><svg class="brand-mark" width="26" height="26" viewBox="0 0 32 32" aria-hidden="true"><circle cx="16" cy="16" r="16" fill="#0e0e0e"/><path d="M16 6c5 2.6 9 6.4 9 10s-4 7.4-9 10c-5-2.6-9-6.4-9-10s4-7.4 9-10Z" fill="#fff"/><path d="M12 13.2c1.2-1.4 2.8-2.1 4.4-2" stroke="#0e0e0e" stroke-width="1.3" stroke-linecap="round" fill="none"/></svg>Pink Lemon</span>
+      <button class="nav-toggle" data-mobile-drawer-close aria-label="Close menu">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M5 5l14 14M19 5 5 19" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <div class="mobile-drawer-links">
+      <a href="index.html">Home</a>
+      <a href="work.html">Work</a>
+      <a href="contact.html">Contact</a>
+      <a href="about.html">About</a>
+      <button class="btn btn-primary btn-block" data-open-modal="modal-proposal">+ Get a Proposal</button>
+    </div>
   </div>
 </header>
 
