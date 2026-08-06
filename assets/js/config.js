@@ -7,4 +7,4 @@
 // If you split the deploy (static frontend on Vercel + backend on Render/Fly/etc.),
 // set this to your backend's full URL, no trailing slash:
 //   window.PL_API_BASE = "https://pink-lemon.onrender.com";
-window.PL_API_BASE = "";
+window.PL_API_BASE = "https://pink-lemon-1.onrender.com";
