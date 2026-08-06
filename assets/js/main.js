@@ -37,18 +37,17 @@
     } else {
       document.documentElement.removeAttribute("data-theme");
     }
-  }
-  function systemPrefersDark() {
-    return window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches;
+    var meta = document.querySelector("[data-theme-color]");
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#121212" : "#ffffff");
   }
   function effectiveTheme() {
+    // Always starts light regardless of OS preference — dark mode is opt-in only,
+    // via the header toggle, and persisted from then on.
     var stored = getStoredTheme();
-    if (stored === "light" || stored === "dark") return stored;
-    return systemPrefersDark() ? "dark" : "light";
+    return stored === "dark" ? "dark" : "light";
   }
 
-  var storedTheme = getStoredTheme();
-  if (storedTheme) applyTheme(storedTheme);
+  applyTheme(effectiveTheme());
 
   var themeToggleBtn = document.querySelector("[data-theme-toggle]");
   if (themeToggleBtn) {

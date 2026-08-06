@@ -32,19 +32,8 @@
   color-scheme:light;
 }
 
-/* Dark theme — follows the system preference by default, or an explicit
-   user choice saved from the header toggle (data-theme wins either way). */
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]){
-    --bg:#121212; --fg:#f2f1ec; --muted:#a8a69c; --muted-2:#7d7b70;
-    --surface:#1a1918; --surface-2:#221f1c; --border:#302e29;
-    --card:#1c1b19; --header-bg:rgba(18,18,18,.78);
-    --ink:#f2f1ec; --on-ink:#121212;
-    --accent-dark:#ff5fa0; --grid-line:#312f2a;
-    --danger-bg:#3a1420; --danger-border:#5a2035; --danger-fg:#ff8fae;
-    color-scheme:dark;
-  }
-}
+/* Dark theme — light by default always; dark only applies when the header
+   toggle explicitly sets data-theme="dark" (persisted, not system-driven). */
 :root[data-theme="dark"]{
   --bg:#121212; --fg:#f2f1ec; --muted:#a8a69c; --muted-2:#7d7b70;
   --surface:#1a1918; --surface-2:#221f1c; --border:#302e29;
@@ -184,10 +173,6 @@ h1,h2,h3,h4,p{ margin:0; }
 .theme-toggle .icon-moon{ display:none; }
 :root[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
 :root[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
-@media (prefers-color-scheme:dark){
-  :root:not([data-theme="light"]) .theme-toggle .icon-sun{ display:none; }
-  :root:not([data-theme="light"]) .theme-toggle .icon-moon{ display:block; }
-}
 
 .mobile-drawer{
   display:none;
