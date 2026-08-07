@@ -310,6 +310,59 @@ h1,h2,h3,h4,p{ margin:0; }
   }
 }
 
+/* ---------- Secondary-page one-pager (Work / About / Contact) ----------
+   Same "fit exactly one screen" idea as the homepage, but simpler: header
+   stays full-width and normal, everything below it is one flexible block
+   that's vertically centred and trimmed to the essentials — no footer, no
+   CTA band. Mobile is untouched (normal scroll, nothing is cut). */
+@media (min-width:901px){
+  .page-onepager{ display:flex; flex-direction:column; min-height:100vh; min-height:100svh; }
+  .page-onepager > .site-header{ flex:none; }
+  .page-onepager-body{
+    flex:1 1 auto; height:0; min-height:0;
+    display:flex; flex-direction:column; justify-content:center;
+    overflow:hidden;
+  }
+  .page-onepager-title{ font-size:clamp(24px,3.6vh,36px); line-height:1.16; max-width:720px; margin-top:10px; }
+  .page-onepager-sub{ font-size:clamp(12.5px,1.5vh,14px); color:var(--muted); max-width:560px; margin-top:10px; line-height:1.6; }
+
+  /* Work page: compact filter row + a 3-up grid sized to fit under the
+     trimmed intro instead of the full 6-project grid. */
+  .page-onepager .work-filters{ margin:20px 0 16px; }
+  .page-onepager .grid-3{ gap:16px; }
+  .page-onepager .work-thumb{ aspect-ratio:auto; height:24vh; }
+  .page-onepager .work-meta{ padding:12px 14px; }
+  .page-onepager .work-meta h3{ font-size:14px; }
+  .page-onepager .work-meta p{ font-size:12px; margin-top:3px; }
+
+  /* About page: a compact team strip under the hero copy instead of the
+     full team grid section. */
+  .about-onepager-grid{ align-items:center; }
+  .about-onepager-team{ display:flex; gap:20px; margin-top:28px; flex-wrap:wrap; }
+  .about-onepager-person{ display:flex; align-items:center; gap:10px; }
+  .about-onepager-person img{ width:38px; height:38px; border-radius:50%; object-fit:cover; flex:none; }
+  .about-onepager-person span{ display:flex; flex-direction:column; font-size:12.5px; font-weight:700; line-height:1.3; }
+  .about-onepager-person span em{ font-style:normal; font-weight:500; color:var(--muted); font-size:11.5px; }
+
+  /* Contact page: compact info card (no map, no social row — trimmed to
+     fit) and a tightened form (dropped the two optional fields, smaller
+     field spacing) sized to sit comfortably under a short heading. */
+  .contact-onepager-title{ margin-top:8px; margin-bottom:18px; max-width:640px; }
+  .contact-onepager-grid{ gap:40px; align-items:start; }
+  .contact-onepager-grid .contact-info-card{ padding:22px; }
+  .contact-onepager-grid .contact-info-item{ padding:11px 0; }
+  .contact-onepager-grid .field{ margin-bottom:12px; }
+  .contact-onepager-grid .form-grid{ gap:14px; }
+  .contact-onepager-grid .field label{ font-size:12px; margin-bottom:4px; }
+  .contact-onepager-grid .field input,
+  .contact-onepager-grid .field select,
+  .contact-onepager-grid .field textarea{ padding:9px 12px; font-size:13px; }
+  .contact-onepager-grid textarea{ min-height:52px; }
+  .contact-onepager-grid .checkbox-row{ margin-bottom:14px; }
+  .contact-onepager-grid .checkbox-row label{ font-size:11.5px; }
+  .contact-onepager-grid button[type="submit"]{ padding:11px 22px; font-size:13.5px; }
+}
+
 /* ---------- Hero ---------- */
 .hero{
   padding:64px 0 90px;
