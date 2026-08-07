@@ -99,7 +99,7 @@ h1,h2,h3,h4,p{ margin:0; }
   justify-content:center;
   gap:8px;
   padding:14px 26px;
-  border-radius:999px;
+  border-radius:10px;
   font-size:14.5px;
   font-weight:600;
   border:1px solid transparent;
@@ -253,35 +253,40 @@ h1,h2,h3,h4,p{ margin:0; }
     position:static; width:100%; height:100%; object-fit:cover; border-radius:28px;
   }
 
-  /* Compact header, confined to the text column's width — matching the
-     reference, where the photo runs behind/above where a full-width bar
-     would otherwise sit. No divider line and no active-page underline —
-     the reference keeps this header perfectly plain. */
-  .onepager .site-header{ border-bottom:none; }
+  /* Compact header — no divider line and no active-page underline, the
+     reference keeps this perfectly plain. Shared with .page-onepager
+     (Work/About/Contact) so every page's header reads as one system,
+     not just the homepage. Home additionally shifts the row's padding
+     to line up with its left column (below); the others keep the
+     ordinary .container gutter so the header aligns with their body copy. */
+  .onepager .site-header,
+  .page-onepager .site-header{ border-bottom:none; }
+  .onepager .site-header .nav-row,
+  .page-onepager .site-header .nav-row{ height:60px; }
   .onepager .site-header .nav-row{
-    height:60px;
     padding-left:clamp(24px,5vw,80px);
     padding-right:24px;
   }
-  .onepager .brand{ font-size:15px; gap:8px; }
-  .onepager .brand-mark{ width:22px; height:22px; }
-  .onepager .nav-links{ gap:22px; }
-  .onepager .nav-links a{ font-size:12.5px; }
-  .onepager .nav-links a::after{ display:none; }
-  .onepager .nav-right{ gap:10px; }
+  .onepager .brand, .page-onepager .brand{ font-size:15px; gap:8px; }
+  .onepager .brand-mark, .page-onepager .brand-mark{ width:22px; height:22px; }
+  .onepager .nav-links, .page-onepager .nav-links{ gap:22px; }
+  .onepager .nav-links a, .page-onepager .nav-links a{ font-size:12.5px; }
+  .onepager .nav-links a::after, .page-onepager .nav-links a::after{ display:none; }
+  .onepager .nav-right, .page-onepager .nav-right{ gap:10px; }
 
-  /* Buttons: squared off (a small radius instead of a full pill) — applies
-     to all three visible on this page: the header's proposal button and
-     the two hero CTAs. The header button flips to a white pill with a
-     dark outline and black text instead of solid black. */
+  /* Header's proposal button flips to a white pill with a dark outline and
+     black text instead of solid black — same on every page — and the hero
+     CTA buttons (Get in touch / View projects, wherever a page has them)
+     match its smaller size. */
   .onepager .hero-actions .btn,
-  .onepager .nav-right .btn-primary{ border-radius:10px; }
-  .onepager .hero-actions .btn{ padding:8px 16px; font-size:12.5px; }
-  .onepager .nav-right .btn-primary{
+  .page-onepager .hero-actions .btn{ padding:8px 16px; font-size:12.5px; }
+  .onepager .nav-right .btn-primary,
+  .page-onepager .nav-right .btn-primary{
     padding:7px 12px; font-size:11px;
     background:#fff; color:#0e0e0e; border:1px solid #0e0e0e;
   }
-  .onepager .nav-right .btn-primary:hover{
+  .onepager .nav-right .btn-primary:hover,
+  .page-onepager .nav-right .btn-primary:hover{
     background:var(--accent-dark); color:#fff; border-color:var(--accent-dark);
   }
 }
@@ -456,7 +461,7 @@ h1,h2,h3,h4,p{ margin:0; }
 /* work cards */
 .work-filters{ display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px; }
 .filter-btn{
-  padding:10px 20px; border-radius:999px; border:1px solid var(--border); background:var(--card);
+  padding:10px 20px; border-radius:10px; border:1px solid var(--border); background:var(--card);
   font-size:13.5px; font-weight:600; color:var(--muted);
 }
 .filter-btn.active, .filter-btn:hover{ background:var(--ink); color:var(--on-ink); border-color:var(--ink); }
