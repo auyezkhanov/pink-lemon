@@ -259,9 +259,8 @@ h1,h2,h3,h4,p{ margin:0; }
   /* Sized off viewport height, not width, so it stays compact like the
      reference mockup instead of ballooning on wide/tall monitors. */
   .onepager .hero-title{ font-size:clamp(23px, 3.8vh, 34px); line-height:1.18; max-width:600px; }
-  /* Same width as the title — "reaches the middle" of the column — which
-     also means it wraps to fewer lines and reads shorter top-to-bottom. */
-  .onepager .hero-text{ font-size:clamp(12.5px, 1.5vh, 14px); margin-top:0; max-width:600px; }
+  /* Wider than the title now — fewer, longer lines instead of a tall block. */
+  .onepager .hero-text{ font-size:clamp(12.5px, 1.5vh, 14px); margin-top:0; max-width:680px; }
   .onepager .hero-actions{ margin-top:clamp(14px, 2.2vh, 22px); gap:10px; }
 
   /* Photo: a framed, centred, rounded portrait that sits comfortably inside
@@ -271,7 +270,7 @@ h1,h2,h3,h4,p{ margin:0; }
     display:flex; align-items:center; justify-content:center;
   }
   .onepager .hero-media-frame{
-    position:relative; height:88%; aspect-ratio:1427/1600; flex:none;
+    position:relative; height:93%; aspect-ratio:1427/1600; flex:none;
   }
   .onepager .hero-media img{
     position:static; width:100%; height:100%; object-fit:cover; border-radius:28px;
@@ -300,9 +299,9 @@ h1,h2,h3,h4,p{ margin:0; }
      dark outline and black text instead of solid black. */
   .onepager .hero-actions .btn,
   .onepager .nav-right .btn-primary{ border-radius:10px; }
-  .onepager .hero-actions .btn{ padding:11px 20px; font-size:13.5px; }
+  .onepager .hero-actions .btn{ padding:8px 16px; font-size:12.5px; }
   .onepager .nav-right .btn-primary{
-    padding:9px 14px; font-size:12px;
+    padding:7px 12px; font-size:11px;
     background:#fff; color:#0e0e0e; border:1px solid #0e0e0e;
   }
   .onepager .nav-right .btn-primary:hover{

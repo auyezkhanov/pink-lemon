@@ -10,4 +10,7 @@ Thumbs.db
 # Original mockup file already copied into assets/img/hero-portrait.jpeg
 WhatsApp Image*.jpeg
 
+# Original logo upload already copied into assets/img/logo.png
+pink_lemon_logo.png
+
 node_modules/
