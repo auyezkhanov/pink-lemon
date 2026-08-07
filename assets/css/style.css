@@ -286,6 +286,26 @@ h1,h2,h3,h4,p{ margin:0; }
   }
 }
 
+/* Work/About/Contact page headings — no base rule existed before, so on
+   mobile these fell back to the browser's default (unstyled, inconsistent)
+   h1. Same shape as .hero-title, just its own scale. */
+.page-onepager-title{
+  font-size:clamp(26px,7.5vw,36px);
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1.15;
+  max-width:640px;
+}
+
+/* About page's compact team strip — needs to work at every width, not just
+   desktop, since it replaces the old team grid entirely (there's no other
+   markup to fall back on below 901px). */
+.about-onepager-team{ display:flex; gap:20px; margin-top:24px; flex-wrap:wrap; }
+.about-onepager-person{ display:flex; align-items:center; gap:10px; }
+.about-onepager-person img{ width:38px; height:38px; border-radius:50%; object-fit:cover; flex:none; }
+.about-onepager-person span{ display:flex; flex-direction:column; font-size:12.5px; font-weight:700; line-height:1.3; }
+.about-onepager-person span em{ font-style:normal; font-weight:500; color:var(--muted); font-size:11.5px; }
+
 /* ---------- Secondary-page one-pager (Work / About / Contact) ----------
    Same "fit exactly one screen" idea as the homepage, but simpler: header
    stays full-width and normal, everything below it is one flexible block
@@ -312,13 +332,9 @@ h1,h2,h3,h4,p{ margin:0; }
   .page-onepager .work-meta p{ font-size:12px; margin-top:3px; }
 
   /* About page: a compact team strip under the hero copy instead of the
-     full team grid section. */
+     full team grid section (align-items only matters once the grid is
+     actually 2 columns, i.e. desktop). */
   .about-onepager-grid{ align-items:center; }
-  .about-onepager-team{ display:flex; gap:20px; margin-top:28px; flex-wrap:wrap; }
-  .about-onepager-person{ display:flex; align-items:center; gap:10px; }
-  .about-onepager-person img{ width:38px; height:38px; border-radius:50%; object-fit:cover; flex:none; }
-  .about-onepager-person span{ display:flex; flex-direction:column; font-size:12.5px; font-weight:700; line-height:1.3; }
-  .about-onepager-person span em{ font-style:normal; font-weight:500; color:var(--muted); font-size:11.5px; }
 
   /* Contact page: compact info card (no map, no social row — trimmed to
      fit) and a tightened form (dropped the two optional fields, smaller
@@ -356,6 +372,11 @@ h1,h2,h3,h4,p{ margin:0; }
   letter-spacing:-.02em;
   line-height:1.08;
   max-width:640px;
+}
+@media (max-width:640px){
+  /* 4.6vw bottoms out at the 34px floor on phones, wrapping a long headline
+     into 5-6 huge lines. Scale off width instead so it stays readable. */
+  .hero-title{ font-size:clamp(27px,7.5vw,34px); line-height:1.15; }
 }
 .hero-text{
   margin-top:26px;
