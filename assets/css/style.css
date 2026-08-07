@@ -216,20 +216,45 @@ h1,h2,h3,h4,p{ margin:0; }
   min-height:100vh;
   min-height:100svh;
 }
+/* Photo bleeds edge-to-edge on every size — no rounding, since a rounded
+   corner sitting flush against the viewport edge reads as a rendering bug. */
+.onepager .hero-media{ border-radius:0; }
+.onepager .hero-copy{ padding-left:20px; padding-right:20px; }
+
 @media (min-width:901px){
   /* min-height:0 overrides the flex/grid default of sizing to content —
      without it, a tall header + hero can silently overflow the viewport
      instead of shrinking, which is what was pushing everything up under
      the header and forcing a scrollbar. */
-  .onepager .hero{ flex:1 0 auto; display:flex; padding:0; min-height:0; }
-  .onepager .hero-grid{ flex:1; width:100%; min-height:0; }
+  .onepager .hero{ flex:1 0 auto; display:flex; padding:0; min-height:0; width:100%; }
+  .onepager .hero-grid.container{
+    flex:1; width:100%; min-height:0;
+    max-width:none; margin:0; padding:0;
+    grid-template-columns:minmax(320px,640px) 1fr;
+    gap:0;
+  }
   .onepager .hero-copy,
   .onepager .hero-media{ min-height:0; }
+  .onepager .hero-copy{
+    padding-left:clamp(24px,5vw,80px);
+    padding-right:40px;
+  }
   /* Sized off viewport height, not width, so it stays compact like the
      reference mockup instead of ballooning on wide/tall monitors. */
-  .onepager .hero-title{ font-size:clamp(26px, 4.6vh, 40px); line-height:1.15; }
-  .onepager .hero-text{ font-size:clamp(13px, 1.7vh, 15px); margin-top:clamp(14px, 2.6vh, 26px); }
-  .onepager .hero-actions{ margin-top:clamp(18px, 3vh, 34px); }
+  .onepager .hero-title{ font-size:clamp(23px, 3.8vh, 34px); line-height:1.18; max-width:560px; }
+  .onepager .hero-text{ font-size:clamp(12.5px, 1.5vh, 14px); margin-top:clamp(12px, 2.2vh, 20px); max-width:420px; }
+  .onepager .hero-actions{ margin-top:clamp(16px, 2.6vh, 26px); gap:10px; }
+  .onepager .hero-actions .btn{ padding:11px 20px; font-size:13.5px; }
+
+  /* Compact header, matching the reference — shorter bar, smaller type,
+     no theme toggle (the button is simply not in this page's markup). */
+  .onepager .site-header .nav-row{ height:60px; }
+  .onepager .brand{ font-size:15px; gap:8px; }
+  .onepager .brand-mark{ width:22px; height:22px; }
+  .onepager .nav-links{ gap:28px; }
+  .onepager .nav-links a{ font-size:13px; }
+  .onepager .nav-right{ gap:12px; }
+  .onepager .nav-right .btn-primary{ padding:9px 16px; font-size:12.5px; }
 }
 
 /* ---------- Hero ---------- */
@@ -563,24 +588,26 @@ h1,h2,h3,h4,p{ margin:0; }
 .switch input:checked + .track::before{ transform:translateX(18px); }
 .switch input:disabled + .track{ background:var(--ink); opacity:.45; cursor:not-allowed; }
 
-/* ---------- Cookie banner ---------- */
+/* ---------- Cookie banner ----------
+   A compact corner card, not a full-width bar — on a one-screen page like
+   the homepage a full-width bottom bar has nowhere to sit that doesn't cover
+   something. This only ever overlaps a page's bottom-right corner. */
 .cookie-banner{
-  position:fixed; left:20px; right:20px; bottom:20px; z-index:150;
+  position:fixed; right:20px; bottom:20px; left:auto; z-index:150;
+  width:min(340px, calc(100% - 40px));
   background:var(--card); border:1px solid var(--border); border-radius:var(--radius-md);
   box-shadow:var(--shadow-pop);
-  padding:24px 28px; display:flex; align-items:center; gap:28px; flex-wrap:wrap;
+  padding:20px 22px; display:flex; flex-direction:column; gap:14px;
   transform:translateY(140%); transition:transform .4s cubic-bezier(.2,.8,.2,1);
 }
 .cookie-banner.show{ transform:translateY(0); }
-.cookie-banner-text{ flex:1; min-width:240px; }
-.cookie-banner-text h5{ font-size:15px; font-weight:700; margin-bottom:6px; }
-.cookie-banner-text p{ font-size:13.5px; color:var(--muted); line-height:1.6; }
+.cookie-banner-text h5{ font-size:14.5px; font-weight:700; margin-bottom:6px; }
+.cookie-banner-text p{ font-size:13px; color:var(--muted); line-height:1.55; }
 .cookie-banner-text a{ text-decoration:underline; color:var(--fg); }
-.cookie-banner-actions{ display:flex; gap:10px; flex-wrap:wrap; }
-@media (max-width:640px){
-  .cookie-banner{ left:12px; right:12px; bottom:12px; padding:20px; }
-  .cookie-banner-actions{ width:100%; }
-  .cookie-banner-actions .btn{ flex:1; }
+.cookie-banner-actions{ display:flex; flex-wrap:wrap; gap:8px; }
+.cookie-banner-actions .btn{ flex:1 1 auto; }
+@media (max-width:480px){
+  .cookie-banner{ right:12px; bottom:12px; width:calc(100% - 24px); padding:18px; }
 }
 
 /* utility */
