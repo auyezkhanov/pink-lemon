@@ -226,11 +226,12 @@ h1,h2,h3,h4,p{ margin:0; }
      without it, a tall header + hero can silently overflow the viewport
      instead of shrinking, which is what was pushing everything up under
      the header and forcing a scrollbar. */
-  .onepager .hero{ flex:1 0 auto; display:flex; padding:0; min-height:0; width:100%; }
+  .onepager .hero{ flex:1 1 auto; display:flex; padding:0; min-height:0; height:0; width:100%; }
   .onepager .hero-grid.container{
-    flex:1; width:100%; min-height:0;
+    flex:1; width:100%; min-height:0; height:100%;
     max-width:none; margin:0; padding:0;
     grid-template-columns:minmax(320px,640px) 1fr;
+    grid-template-rows:minmax(0,1fr);
     gap:0;
   }
   .onepager .hero-copy,
@@ -238,12 +239,17 @@ h1,h2,h3,h4,p{ margin:0; }
   .onepager .hero-copy{
     padding-left:clamp(24px,5vw,80px);
     padding-right:40px;
+    padding-top:clamp(24px,5vh,56px);
+    padding-bottom:clamp(24px,5vh,56px);
+    /* Title pinned to the top, description+buttons pinned to the bottom —
+       matches the reference instead of one centered block of text. */
+    justify-content:space-between;
   }
   /* Sized off viewport height, not width, so it stays compact like the
      reference mockup instead of ballooning on wide/tall monitors. */
   .onepager .hero-title{ font-size:clamp(23px, 3.8vh, 34px); line-height:1.18; max-width:560px; }
-  .onepager .hero-text{ font-size:clamp(12.5px, 1.5vh, 14px); margin-top:clamp(12px, 2.2vh, 20px); max-width:420px; }
-  .onepager .hero-actions{ margin-top:clamp(16px, 2.6vh, 26px); gap:10px; }
+  .onepager .hero-text{ font-size:clamp(12.5px, 1.5vh, 14px); margin-top:0; max-width:420px; }
+  .onepager .hero-actions{ margin-top:clamp(14px, 2.2vh, 22px); gap:10px; }
   .onepager .hero-actions .btn{ padding:11px 20px; font-size:13.5px; }
 
   /* Compact header, matching the reference — shorter bar, smaller type,
