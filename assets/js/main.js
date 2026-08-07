@@ -25,39 +25,6 @@
     img.addEventListener("load", function () { markLoaded(img); });
   });
 
-  /* ---------------- Theme toggle ---------------- */
-  var THEME_KEY = "pl_theme";
-
-  function getStoredTheme() {
-    try { return localStorage.getItem(THEME_KEY); } catch (e) { return null; }
-  }
-  function applyTheme(theme) {
-    if (theme === "light" || theme === "dark") {
-      document.documentElement.setAttribute("data-theme", theme);
-    } else {
-      document.documentElement.removeAttribute("data-theme");
-    }
-    var meta = document.querySelector("[data-theme-color]");
-    if (meta) meta.setAttribute("content", theme === "dark" ? "#121212" : "#ffffff");
-  }
-  function effectiveTheme() {
-    // Always starts light regardless of OS preference — dark mode is opt-in only,
-    // via the header toggle, and persisted from then on.
-    var stored = getStoredTheme();
-    return stored === "dark" ? "dark" : "light";
-  }
-
-  applyTheme(effectiveTheme());
-
-  var themeToggleBtn = document.querySelector("[data-theme-toggle]");
-  if (themeToggleBtn) {
-    themeToggleBtn.addEventListener("click", function () {
-      var next = effectiveTheme() === "dark" ? "light" : "dark";
-      try { localStorage.setItem(THEME_KEY, next); } catch (e) {}
-      applyTheme(next);
-    });
-  }
-
   /* ---------------- Header scroll shadow ---------------- */
   var siteHeader = document.querySelector(".site-header");
   if (siteHeader) {

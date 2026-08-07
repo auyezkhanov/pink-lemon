@@ -32,20 +32,6 @@
   color-scheme:light;
 }
 
-/* Dark theme — light by default always; dark only applies when the header
-   toggle explicitly sets data-theme="dark" (persisted, not system-driven). */
-:root[data-theme="dark"]{
-  --bg:#121212; --fg:#f2f1ec; --muted:#a8a69c; --muted-2:#7d7b70;
-  --surface:#1a1918; --surface-2:#221f1c; --border:#302e29;
-  --card:#1c1b19; --header-bg:rgba(18,18,18,.78);
-  --ink:#f2f1ec; --on-ink:#121212;
-  --accent-dark:#ff5fa0; --grid-line:#312f2a;
-  --danger-bg:#3a1420; --danger-border:#5a2035; --danger-fg:#ff8fae;
-  color-scheme:dark;
-}
-html{ transition:background-color .25s ease; }
-body{ transition:background-color .25s ease, color .25s ease; }
-
 *,*::before,*::after{ box-sizing:border-box; }
 html{ scroll-behavior:smooth; }
 body{
@@ -167,15 +153,6 @@ h1,h2,h3,h4,p{ margin:0; }
 .nav-toggle .icon-close{ display:none; }
 .nav-toggle.open .icon-menu{ display:none; }
 .nav-toggle.open .icon-close{ display:block; }
-
-.theme-toggle{
-  width:42px; height:42px; flex:none; display:flex; align-items:center; justify-content:center;
-  border-radius:50%; border:1px solid var(--border); background:var(--card); color:var(--fg);
-}
-.theme-toggle svg{ width:18px; height:18px; }
-.theme-toggle .icon-moon{ display:none; }
-:root[data-theme="dark"] .theme-toggle .icon-sun{ display:none; }
-:root[data-theme="dark"] .theme-toggle .icon-moon{ display:block; }
 
 /* Full-screen overlay, independent of the header's real height — no more
    guessing a fixed top offset that breaks when the header wraps to 2 lines. */
