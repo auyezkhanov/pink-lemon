@@ -227,11 +227,9 @@ h1,h2,h3,h4,p{ margin:0; }
    hero-media becomes a sibling of the header itself — cancel that order so
    the header stays first instead of jumping below the photo. */
 .onepager .hero-media{ order:0; }
-/* Photo bleeds edge-to-edge on every size — no rounding, since a rounded
-   corner sitting flush against the viewport edge reads as a rendering bug.
-   contain (not cover) so the whole portrait is always visible, uncropped —
-   the surface colour behind it matches the photo's own background so any
-   letterboxing reads as intentional, not like a sizing mistake. */
+/* Mobile: photo bleeds edge-to-edge, no rounding (a rounded corner flush
+   against the viewport edge reads as a rendering bug), contain so the whole
+   portrait is visible uncropped, backdrop matched to the photo's own. */
 .onepager .hero-media{ border-radius:0; background:#f7f7f7; }
 .onepager .hero-media img{ object-fit:contain; }
 .onepager .hero-copy{ padding-left:20px; padding-right:20px; }
@@ -239,7 +237,7 @@ h1,h2,h3,h4,p{ margin:0; }
 @media (min-width:901px){
   .hero-grid-wrap{
     display:grid;
-    grid-template-columns:minmax(320px,640px) 1fr;
+    grid-template-columns:minmax(320px,720px) 1fr;
     grid-template-rows:auto minmax(0,1fr);
     flex:1 1 auto; height:0; min-height:0; width:100%;
   }
@@ -252,16 +250,32 @@ h1,h2,h3,h4,p{ margin:0; }
     padding-right:40px;
     padding-top:clamp(24px,5vh,56px);
     padding-bottom:clamp(24px,5vh,56px);
-    /* Title pinned to the top, description+buttons pinned to the bottom —
-       matches the reference instead of one centered block of text. */
+    /* Title centred within the upper zone, description+buttons pinned to
+       the bottom — matches the reference instead of the title sitting
+       flush against the header. */
     justify-content:space-between;
   }
+  .onepager .hero-title-wrap{ flex:1 1 auto; display:flex; align-items:center; min-height:0; }
   /* Sized off viewport height, not width, so it stays compact like the
      reference mockup instead of ballooning on wide/tall monitors. */
-  .onepager .hero-title{ font-size:clamp(23px, 3.8vh, 34px); line-height:1.18; max-width:560px; }
-  .onepager .hero-text{ font-size:clamp(12.5px, 1.5vh, 14px); margin-top:0; max-width:420px; }
+  .onepager .hero-title{ font-size:clamp(23px, 3.8vh, 34px); line-height:1.18; max-width:600px; }
+  .onepager .hero-text{ font-size:clamp(12.5px, 1.5vh, 14px); margin-top:0; max-width:460px; }
   .onepager .hero-actions{ margin-top:clamp(14px, 2.2vh, 22px); gap:10px; }
   .onepager .hero-actions .btn{ padding:11px 20px; font-size:13.5px; }
+
+  /* Photo: a framed, right-aligned, rounded portrait instead of a full-bleed
+     panel — no more empty grey letterbox either side of it. */
+  .onepager .hero-media{
+    background:transparent; border-radius:0;
+    display:flex; align-items:center; justify-content:flex-end;
+  }
+  .onepager .hero-media-frame{
+    position:relative; height:88%; aspect-ratio:1427/1600; flex:none;
+  }
+  .onepager .hero-media img{
+    position:static; width:100%; height:100%; object-fit:cover; border-radius:28px;
+  }
+  .onepager .hero-media-tag{ left:20px; bottom:20px; }
 
   /* Compact header, confined to the text column's width — matching the
      reference, where the photo runs behind/above where a full-width bar
