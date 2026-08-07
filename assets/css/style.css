@@ -724,3 +724,30 @@ h1,h2,h3,h4,p{ margin:0; }
 .hide{ display:none !important; }
 .reveal{ opacity:0; transform:translateY(18px); transition:opacity .6s ease, transform .6s ease; }
 .reveal.in{ opacity:1; transform:none; }
+
+/* ---------- Page-to-page motion ----------
+   The header sits top-left next to the photo on the homepage, but full-width
+   and centred on every other page — a real layout difference, not a bug.
+   Cross-document View Transitions let the browser morph the *same* header
+   element smoothly between those two shapes as you navigate, instead of the
+   instant jump. Chromium-only today; every other browser just navigates
+   normally — this is a progressive enhancement, not a dependency. */
+@view-transition{
+  navigation:auto;
+}
+.site-header{ view-transition-name:site-header; }
+::view-transition-group(site-header){
+  animation-duration:.5s;
+  animation-timing-function:cubic-bezier(.22,.8,.22,1);
+}
+::view-transition-old(root),
+::view-transition-new(root){
+  animation-duration:.3s;
+}
+@media (prefers-reduced-motion:reduce){
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*){
+    animation:none !important;
+  }
+}
