@@ -344,6 +344,19 @@ h1,h2,h3,h4,p{ margin:0; }
   line-height:1.15;
   max-width:640px;
 }
+/* .page-onepager-sub had no mobile rule at all — it fell back to the
+   h1,h2,h3,h4,p{margin:0} reset, so the subhead sat flush against the
+   heading and the next block (filters/buttons) sat flush against that,
+   on Work and About. Contact has no subhead, so its heading needed its
+   own bottom margin instead. */
+@media (max-width:900px){
+  .page-onepager-title{ margin-bottom:16px; }
+  .page-onepager-sub{
+    font-size:14.5px; line-height:1.65; color:var(--muted); max-width:560px;
+    margin-bottom:24px;
+  }
+  .contact-onepager-title{ margin-bottom:28px; }
+}
 
 /* About page's compact team strip — needs to work at every width, not just
    desktop, since it replaces the old team grid entirely (there's no other
