@@ -528,6 +528,7 @@ h1,h2,h3,h4,p{ margin:0; }
 .work-card{
   border-radius:var(--radius-md); overflow:hidden; background:var(--surface);
   border:1px solid var(--border); cursor:pointer; display:block; width:100%; text-align:left; padding:0;
+  color:var(--fg); font:inherit;
   transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
 }
 .work-card:hover{ transform:translateY(-5px); box-shadow:var(--shadow-soft); border-color:transparent; }
