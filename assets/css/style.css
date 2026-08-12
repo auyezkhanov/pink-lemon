@@ -14,13 +14,13 @@
   --header-bg:rgba(255,255,255,.82);
   --ink:#0e0e0e;
   --on-ink:#ffffff;
-  --accent:#ff3d84;
-  --accent-dark:#d81f68;
-  --lemon:#f4d35e;
+  --accent:#0e0e0e;
+  --accent-dark:#000000;
+  --lemon:#ffffff;
   --dark:#111110;
   --dark-2:#1c1b19;
   --grid-line:#e9e7df;
-  --danger-bg:#fdeef1; --danger-border:#f4c2cf; --danger-fg:#a3123a;
+  --danger-bg:#f3f2ee; --danger-border:#0e0e0e; --danger-fg:#0e0e0e;
   --radius-lg:28px;
   --radius-md:16px;
   --radius-sm:10px;
@@ -59,7 +59,7 @@ button{ font-family:inherit; cursor:pointer; }
 ul{ margin:0; padding:0; list-style:none; }
 h1,h2,h3,h4,p{ margin:0; }
 
-:focus-visible{
+:focus, :focus-visible{
   outline:2px solid var(--accent);
   outline-offset:3px;
   border-radius:2px;
@@ -402,23 +402,21 @@ h1,h2,h3,h4,p{ margin:0; }
      actually 2 columns, i.e. desktop). */
   .about-onepager-grid{ align-items:center; }
 
-  /* Contact page: compact info card (no map, no social row — trimmed to
-     fit) and a tightened form (dropped the two optional fields, smaller
-     field spacing) sized to sit comfortably under a short heading. */
+  /* Contact page: no map, no social row — trimmed to fit. The form itself
+     used to be squeezed (9px/12px field padding vs. the 13px/15px every
+     other form on the site uses, e.g. the Get a Proposal modal) to force
+     it under the one-screen fit. Fields now keep the site's one standard
+     padding everywhere; .contact-page-body below trades the strict
+     one-screen fit for a normal scroll when that no longer fits. */
   .contact-onepager-title{ margin-top:8px; margin-bottom:18px; max-width:640px; }
   .contact-onepager-grid{ gap:40px; align-items:start; }
-  .contact-onepager-grid .contact-info-card{ padding:22px; }
-  .contact-onepager-grid .contact-info-item{ padding:11px 0; }
-  .contact-onepager-grid .field{ margin-bottom:12px; }
-  .contact-onepager-grid .form-grid{ gap:14px; }
-  .contact-onepager-grid .field label{ font-size:12px; margin-bottom:4px; }
-  .contact-onepager-grid .field input,
-  .contact-onepager-grid .field select,
-  .contact-onepager-grid .field textarea{ padding:9px 12px; font-size:13px; }
-  .contact-onepager-grid textarea{ min-height:52px; }
-  .contact-onepager-grid .checkbox-row{ margin-bottom:14px; }
-  .contact-onepager-grid .checkbox-row label{ font-size:11.5px; }
-  .contact-onepager-grid button[type="submit"]{ padding:11px 22px; font-size:13.5px; }
+}
+
+/* Content now sized for comfortable, consistent padding rather than a
+   forced single-screen fit — let this page scroll like Home/Work/About's
+   mobile layout already does, instead of clipping via overflow:hidden. */
+@media (min-width:901px){
+  .contact-page-body{ height:auto; min-height:0; overflow:visible; padding:32px 0 56px; }
 }
 
 /* ---------- Hero ---------- */
@@ -621,7 +619,7 @@ h1,h2,h3,h4,p{ margin:0; }
   position:absolute; left:50%; top:50%; transform:translate(-50%,-60%);
   width:34px; height:34px; border-radius:50% 50% 50% 0; background:var(--accent);
   display:flex; align-items:center; justify-content:center; rotate:-45deg;
-  box-shadow:0 10px 20px -6px rgba(255,61,132,.55);
+  box-shadow:0 10px 20px -6px rgba(14,14,14,.45);
 }
 .map-pin::after{ content:""; width:10px; height:10px; border-radius:50%; background:#fff; rotate:45deg; }
 
@@ -640,8 +638,8 @@ h1,h2,h3,h4,p{ margin:0; }
   outline:none; border-color:var(--fg); box-shadow:0 0 0 3px rgba(14,14,14,.07);
 }
 .field textarea{ resize:vertical; min-height:110px; }
-.field .error-msg{ font-size:12.5px; color:#c0264b; display:none; }
-.field.invalid input, .field.invalid select, .field.invalid textarea{ border-color:#c0264b; }
+.field .error-msg{ font-size:12.5px; color:var(--fg); font-weight:600; display:none; }
+.field.invalid input, .field.invalid select, .field.invalid textarea{ border-color:var(--fg); border-width:1.5px; }
 .field.invalid .error-msg{ display:block; }
 .checkbox-row{ display:flex; align-items:flex-start; gap:10px; margin-bottom:20px; }
 .checkbox-row input{ margin-top:3px; width:16px; height:16px; flex:none; }
