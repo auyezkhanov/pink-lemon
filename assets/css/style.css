@@ -630,7 +630,12 @@ img[src*="1523726491678"]{ filter:grayscale(1); }
 
 /* ---------- Forms ---------- */
 .form-grid{ display:grid; grid-template-columns:1fr 1fr; gap:18px; }
-@media (max-width:560px){ .form-grid{ grid-template-columns:1fr; } }
+/* Single column on mobile stacks each pair (name/email, type/budget) into
+   two grid rows — the grid's row-gap (18px) used to stack on top of each
+   .field's own margin-bottom (18px), doubling that gap to 36px versus the
+   18px between any other two fields. Zero the grid gap here since the
+   field margin alone already spaces stacked rows correctly. */
+@media (max-width:560px){ .form-grid{ grid-template-columns:1fr; gap:0; } }
 .field{ display:flex; flex-direction:column; gap:8px; margin-bottom:18px; }
 .field.full{ grid-column:1 / -1; }
 .field label{ font-size:13px; font-weight:600; }
