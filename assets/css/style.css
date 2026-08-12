@@ -534,6 +534,10 @@ h1,h2,h3,h4,p{ margin:0; }
 .work-thumb{ position:relative; aspect-ratio:4/3; overflow:hidden; }
 .work-thumb img{ width:100%; height:100%; object-fit:cover; transition:transform .5s ease; }
 .work-card:hover .work-thumb img{ transform:scale(1.06); }
+/* Halo Studio's source photo has blue pen sketches — desaturate this one
+   image (grid card + case-study modal share the same URL) to keep it in
+   the site's black-and-white language without swapping the photo. */
+img[src*="1523726491678"]{ filter:grayscale(1); }
 .work-thumb .tag{
   position:absolute; top:14px; left:14px; background:rgba(255,255,255,.92); border-radius:999px;
   padding:6px 12px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
@@ -633,6 +637,17 @@ h1,h2,h3,h4,p{ margin:0; }
 .field input, .field select, .field textarea{
   border:1px solid var(--border); border-radius:12px; padding:13px 15px; font-size:14.5px;
   font-family:inherit; background:var(--card); color:var(--fg); width:100%; transition:border-color .18s ease, box-shadow .18s ease;
+}
+/* The browser's native <select> reserves its own space for the dropdown
+   arrow on top of our padding, rendering 2px taller than a plain <input>
+   even with identical CSS — replace it with our own arrow so every field
+   in the form shares the exact same box height. */
+.field select{
+  -webkit-appearance:none; appearance:none;
+  padding-right:38px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' stroke='%230e0e0e' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;
+  background-position:right 15px center;
 }
 .field input:focus, .field select:focus, .field textarea:focus{
   outline:none; border-color:var(--fg); box-shadow:0 0 0 3px rgba(14,14,14,.07);
