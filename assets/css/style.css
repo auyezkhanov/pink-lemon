@@ -202,12 +202,57 @@ h1,h2,h3,h4,p{ margin:0; }
    hero-media becomes a sibling of the header itself — cancel that order so
    the header stays first instead of jumping below the photo. */
 .onepager .hero-media{ order:0; }
-/* Mobile: photo bleeds edge-to-edge, no rounding (a rounded corner flush
-   against the viewport edge reads as a rendering bug), contain so the whole
-   portrait is visible uncropped, backdrop matched to the photo's own. */
-.onepager .hero-media{ border-radius:0; background:#f7f7f7; }
-.onepager .hero-media img{ object-fit:contain; }
+.onepager .hero-media{ background:#f7f7f7; }
 .onepager .hero-copy{ padding-left:20px; padding-right:20px; }
+
+/* ---------- Homepage on phones ----------
+   Desktop shows a rounded, inset photo card beside the text. Mobile used to
+   drop that entirely: a full-bleed, square-cornered photo at its natural
+   aspect ratio (437px of an 844px screen) that pushed the headline, the
+   copy and both CTAs completely below the fold. This keeps the desktop's
+   language — same rounded card, same inset — just stacked, and sized so the
+   headline is visible immediately instead of after a scroll. */
+@media (max-width:900px){
+  .onepager .hero{ padding:0; }
+  .onepager .hero-media{
+    border-radius:var(--radius-lg);
+    margin:12px 20px 0;
+    min-height:0;
+    height:34vh;
+    max-height:360px;
+  }
+  /* The frame wrapper (a desktop construct) has no height of its own here,
+     so the img inside fell back to its natural aspect and simply got clipped
+     from the top by the parent's overflow — object-position never applied.
+     Giving the frame the parent's height makes cover/object-position real. */
+  .onepager .hero-media-frame{ height:100%; width:100%; }
+  .onepager .hero-media img{
+    /* cover + a high focal point keeps the head framed while trimming the
+       torso, which is what the fixed height crops away. */
+    object-fit:cover;
+    object-position:center 22%;
+    height:100%;
+  }
+  .onepager .hero-copy{ padding-top:28px; padding-bottom:36px; }
+  .onepager .hero-title{ margin:0; line-height:1.16; }
+  .onepager .hero-copy-bottom{ margin-top:22px; }
+  .onepager .hero-text{
+    margin-top:0;
+    font-size:15px;
+    line-height:1.65;
+  }
+  .onepager .hero-actions{ margin-top:26px; gap:12px; }
+  .onepager .hero-actions .btn{ flex:1 1 0; padding:14px 18px; }
+
+  .onepager .site-header .nav-row{ height:72px; }
+}
+
+/* The header's + button is a squared-off 10px button; the hamburger next to
+   it was a 50% circle. Matching them reads as one control group — on every
+   page, not just the homepage. */
+@media (max-width:900px){
+  .nav-toggle{ border-radius:10px; }
+}
 
 @media (min-width:901px){
   .hero-grid-wrap{
@@ -322,13 +367,31 @@ h1,h2,h3,h4,p{ margin:0; }
     display:flex; flex-direction:column; justify-content:center;
     overflow:hidden;
   }
+
+  /* Share the homepage's left gutter instead of a centred .container.
+     Before this, the logo/title sat at 112px on these pages vs 72px on
+     home (1440px) — and 352px vs 80px at 1920px, so the whole header
+     visibly leapt across the screen on every navigation. Now every page
+     hangs off the same left edge; content is capped and left-aligned
+     (margin-right:auto) so wide screens don't stretch the card grid. */
+  .page-onepager .site-header .nav-row,
+  .page-onepager-body > .container{
+    max-width:1560px;
+    margin-left:0; margin-right:auto;
+    padding-left:clamp(24px,5vw,80px);
+    padding-right:clamp(24px,5vw,80px);
+  }
+
   .page-onepager-title{ font-size:clamp(24px,3.6vh,36px); line-height:1.16; max-width:720px; margin-top:10px; }
   .page-onepager-sub{ font-size:clamp(12.5px,1.5vh,14px); color:var(--muted); max-width:560px; margin-top:10px; line-height:1.6; }
 
   /* Work page: compact filter row + a 3-up grid sized to fit under the
-     trimmed intro instead of the full 6-project grid. */
+     trimmed intro instead of the full 6-project grid. Cards pick up the
+     homepage photo's 28px corner radius (they were 16px) so the site has
+     one radius language for big visual blocks. */
   .page-onepager .work-filters{ margin:20px 0 16px; }
-  .page-onepager .grid-3{ gap:16px; }
+  .page-onepager .grid-3{ gap:18px; }
+  .page-onepager .work-card{ border-radius:var(--radius-lg); }
   .page-onepager .work-thumb{ aspect-ratio:auto; height:24vh; }
   .page-onepager .work-meta{ padding:12px 14px; }
   .page-onepager .work-meta h3{ font-size:14px; }
