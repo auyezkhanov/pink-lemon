@@ -418,18 +418,18 @@ h1,h2,h3,h4,p{ margin:0; }
   /* Contact page: no map, no social row — trimmed to fit. The form itself
      used to be squeezed (9px/12px field padding vs. the 13px/15px every
      other form on the site uses, e.g. the Get a Proposal modal) to force
-     it under the one-screen fit. Fields now keep the site's one standard
-     padding everywhere; .contact-page-body below trades the strict
-     one-screen fit for a normal scroll when that no longer fits. */
-  .contact-onepager-title{ margin-top:8px; margin-bottom:18px; max-width:640px; }
-  .contact-onepager-grid{ gap:40px; align-items:start; }
-}
-
-/* Content now sized for comfortable, consistent padding rather than a
-   forced single-screen fit — let this page scroll like Home/Work/About's
-   mobile layout already does, instead of clipping via overflow:hidden. */
-@media (min-width:901px){
-  .contact-page-body{ height:auto; min-height:0; overflow:visible; padding:32px 0 56px; }
+     it under the one-screen fit — fields now keep that one standard
+     padding everywhere. The info card was still sized for its own old
+     40px/18px padding though, making it ~180px taller than the form next
+     to it (lopsided columns) and pushing the page past one screen on
+     shorter laptop heights. Scale the card's padding with vh instead —
+     it's the one piece of "give it room" that's safe to trim, since it's
+     not a form field. align-items:center keeps the shorter form visually
+     balanced against the card instead of stranded at the top. */
+  .contact-onepager-title{ margin-top:8px; margin-bottom:clamp(10px,2vh,18px); max-width:640px; }
+  .contact-onepager-grid{ gap:40px; align-items:center; }
+  .contact-onepager-grid .contact-info-card{ padding:clamp(20px,3.2vh,32px); }
+  .contact-onepager-grid .contact-info-item{ padding:clamp(8px,1.6vh,14px) 0; }
 }
 
 /* ---------- Hero ---------- */
