@@ -424,10 +424,11 @@ h1,h2,h3,h4,p{ margin:0; }
      to it (lopsided columns) and pushing the page past one screen on
      shorter laptop heights. Scale the card's padding with vh instead —
      it's the one piece of "give it room" that's safe to trim, since it's
-     not a form field. align-items:center keeps the shorter form visually
-     balanced against the card instead of stranded at the top. */
+     not a form field. align-items:start keeps "Email" and "Full name"
+     flush at the same top edge — centering made the shorter form drift
+     down and look newly misaligned against the card instead. */
   .contact-onepager-title{ margin-top:8px; margin-bottom:clamp(10px,2vh,18px); max-width:640px; }
-  .contact-onepager-grid{ gap:40px; align-items:center; }
+  .contact-onepager-grid{ gap:40px; align-items:start; }
   .contact-onepager-grid .contact-info-card{ padding:clamp(20px,3.2vh,32px); }
   .contact-onepager-grid .contact-info-item{ padding:clamp(8px,1.6vh,14px) 0; }
 }
