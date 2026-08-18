@@ -676,7 +676,7 @@ img[src*="1523726491678"]{ filter:grayscale(1); }
 .field .error-msg{ font-size:12.5px; color:var(--fg); font-weight:600; display:none; }
 .field.invalid input, .field.invalid select, .field.invalid textarea{ border-color:var(--fg); border-width:1.5px; }
 .field.invalid .error-msg{ display:block; }
-.checkbox-row{ display:flex; align-items:flex-start; gap:10px; margin-bottom:20px; }
+.checkbox-row{ display:flex; align-items:flex-start; gap:10px; margin-bottom:18px; }
 .checkbox-row input{ margin-top:3px; width:16px; height:16px; flex:none; }
 .checkbox-row label{ font-size:13px; color:var(--muted); line-height:1.55; }
 .checkbox-row a{ text-decoration:underline; color:var(--fg); }
