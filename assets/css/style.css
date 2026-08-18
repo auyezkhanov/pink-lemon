@@ -558,7 +558,7 @@ img[src*="1523726491678"]{ filter:grayscale(1); }
   padding:6px 12px; font-size:12px; font-weight:700; text-transform:uppercase; letter-spacing:.03em;
 }
 .work-thumb .expand{
-  position:absolute; right:14px; bottom:14px; width:36px; height:36px; border-radius:50%;
+  position:absolute; right:14px; bottom:14px; width:36px; height:36px; border-radius:var(--radius-sm);
   background:var(--card); display:flex; align-items:center; justify-content:center; transform:scale(.9); opacity:0;
   transition:all .25s ease;
 }
@@ -753,7 +753,7 @@ img[src*="1523726491678"]{ filter:grayscale(1); }
 .modal.modal-wide{ max-width:880px; }
 @keyframes modalIn{ from{ opacity:0; transform:translateY(14px) scale(.98);} to{ opacity:1; transform:none; } }
 .modal-close{
-  position:absolute; top:20px; right:20px; width:38px; height:38px; border-radius:50%;
+  position:absolute; top:20px; right:20px; width:38px; height:38px; border-radius:var(--radius-sm);
   border:1px solid var(--border); background:var(--card); color:var(--fg); display:flex; align-items:center; justify-content:center;
 }
 .modal-close:hover{ background:var(--surface); }
